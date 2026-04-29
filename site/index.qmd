@@ -1,12 +1,12 @@
 ---
 title: "Global Barrier Project"
-subtitle: "Synthesizing GPS tracking data to quantify barrier effects on terrestrial mammal movement"
+subtitle: "Synthesizing animal tracking data to quantify effects of human infrastructure on terrestrial mammal movement"
 date: today
 ---
 
 ## What this project is
 
-We are assembling a global GPS tracking dataset for terrestrial mammals to test how
+We assemble a global GPS tracking dataset for terrestrial mammals to examine how
 linear infrastructure and other anthropogenic barriers reshape animal movement —
 from fine-scale behavioral responses to landscape-level connectivity loss.
 
@@ -18,14 +18,14 @@ The compiled archive currently spans **301 studies** across **69 species** and
 
 ## Why now
 
-Linear infrastructure — roads, fences, railways, pipelines — is expanding faster
+Anthropogenic infrastructure such as settlements, roads, fences, railways is expanding faster
 than our ability to measure its cumulative effect on wildlife movement. Single-study
 designs miss cross-system patterns. By harmonizing tracking data across species and
-biomes, we can ask:
+biomes, we ask:
 
-- How do barrier responses vary across taxa, body size, and movement strategy?
-- Where are the most permeable, and the most fragmented, landscapes?
-- What management interventions have measurable effects?
+- How does the configuration, in addition to the composition, of anthropogenic infrastructure shape animal movement?
+- How animals cross different types of transporation infrastructure differently?
+- How can we use actual animal movement data to inform functional connectivity?
 
 ## Team & contributors
 

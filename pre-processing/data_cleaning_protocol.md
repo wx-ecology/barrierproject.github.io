@@ -8,7 +8,7 @@
 
 ## Overview
 
-This protocol covers all steps between receipt of raw GPS tracking data from collaborators and the start of manuscript analyses. Each level produces a versioned output dataset. All decisions are logged in the cleaning metadata spreadsheet.
+This protocol covers preprocessing steps between receipt of raw GPS tracking data from collaborators and the start of analyses for different subprojects. Each level produces a versioned output dataset. All decisions are logged in the cleaning metadata spreadsheet.
 
 **Responsibility note:** Verification of data integrity — correct species, individual identity, deployment dates, tag behavior — is the responsibility of the data collector/owner. Flagged issues must be resolved with the data provider before proceeding.
 

@@ -1,12 +1,14 @@
 project:
   type: website
   output-dir: docs   # GitHub Pages serves from /docs on main
+  resources:
+    - "data/**"      # ensure the GeoJSON gets copied into the rendered site
 
 website:
   title: "Global Barrier Project"
   description: "GPS tracking data synthesis on barrier effects on terrestrial mammal movement."
-  site-url: "https://wx-ecology.github.io/barrierprojct.github.io/"
-  repo-url: "https://github.com/wx-ecology/barrierprojct.github.io"
+  site-url: "https://wx-ecology.github.io/barrierproject.github.io/"
+  repo-url: "https://github.com/wx-ecology/barrierproject.github.io"
   navbar:
     left:
       - href: index.qmd
@@ -17,7 +19,7 @@ website:
         text: Data protocol
     right:
       - icon: github
-        href: https://github.com/wx-ecology/barrierprojct.github.io
+        href: https://github.com/wx-ecology/barrierproject.github.io
   page-footer:
     center: "© Global Barrier Project · Last updated {{< meta date >}}"
 
