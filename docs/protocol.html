@@ -457,10 +457,9 @@ Note
 <section id="implementation-notes" class="level2">
 <h2 class="anchored" data-anchor-id="implementation-notes">Implementation Notes</h2>
 <ul>
-<li>Filters must be applied sequentially, not simultaneously, with a visual sanity check after each step (Gupte et al.&nbsp;2022, §4.2).</li>
-<li>Pre-processing code should be version-controlled (e.g., via Git) and documented to ensure reproducibility (Gupte et al.&nbsp;2022, §2.2).</li>
-<li>Prolonged displacement errors — consecutive erroneous positions that appear plausible individually — cannot be caught by point-level speed filters and are the primary target of Level 2 visual review (Gupte et al.&nbsp;2022, §5.2).</li>
-<li>If study locations are sensitive (e.g., endangered or poaching-risk species), display map centroids at the country or regional level rather than exact study coordinates. Check with data owners before publishing location information.</li>
+<li>Filters are applied sequentially, not simultaneously, with a visual sanity check after each step.</li>
+<li>Consecutive erroneous positions that appear plausible individually — cannot be caught by point-level speed filters and are the primary target of Level 2 visual review.</li>
+<li>Some study locations are sensitive (e.g., endangered or poaching-risk species) and individual centroid location will not be made public.</li>
 </ul>
 <hr>
 </section>
