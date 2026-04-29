@@ -1,6 +1,6 @@
 project:
   type: website
-  output-dir: docs   # GitHub Pages serves from /docs on main
+  output-dir: ../docs   # output to /docs at the repo root for GitHub Pages
   resources:
     - "data/**"      # ensure the GeoJSON gets copied into the rendered site
 
