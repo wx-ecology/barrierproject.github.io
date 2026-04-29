@@ -4,21 +4,21 @@
     "href": "index.html",
     "title": "Global Barrier Project",
     "section": "",
-    "text": "We are assembling a global GPS tracking dataset for terrestrial mammals to test how linear infrastructure and other anthropogenic barriers reshape animal movement — from fine-scale behavioral responses to landscape-level connectivity loss.\nThe compiled archive currently spans 301 studies across 69 species and 60+ countries, contributed by collaborators worldwide.\nSee the study sites map → Read the data protocol →"
+    "text": "We assemble a global GPS tracking dataset for terrestrial mammals to examine how linear infrastructure and other anthropogenic barriers reshape animal movement — from fine-scale behavioral responses to landscape-level connectivity loss.\nThe compiled archive currently spans 301 studies across 69 species and 60+ countries, contributed by collaborators worldwide.\nSee the study sites map → Read the data protocol →"
   },
   {
     "objectID": "index.html#what-this-project-is",
     "href": "index.html#what-this-project-is",
     "title": "Global Barrier Project",
     "section": "",
-    "text": "We are assembling a global GPS tracking dataset for terrestrial mammals to test how linear infrastructure and other anthropogenic barriers reshape animal movement — from fine-scale behavioral responses to landscape-level connectivity loss.\nThe compiled archive currently spans 301 studies across 69 species and 60+ countries, contributed by collaborators worldwide.\nSee the study sites map → Read the data protocol →"
+    "text": "We assemble a global GPS tracking dataset for terrestrial mammals to examine how linear infrastructure and other anthropogenic barriers reshape animal movement — from fine-scale behavioral responses to landscape-level connectivity loss.\nThe compiled archive currently spans 301 studies across 69 species and 60+ countries, contributed by collaborators worldwide.\nSee the study sites map → Read the data protocol →"
   },
   {
     "objectID": "index.html#why-now",
     "href": "index.html#why-now",
     "title": "Global Barrier Project",
     "section": "Why now",
-    "text": "Why now\nLinear infrastructure — roads, fences, railways, pipelines — is expanding faster than our ability to measure its cumulative effect on wildlife movement. Single-study designs miss cross-system patterns. By harmonizing tracking data across species and biomes, we can ask:\n\nHow do barrier responses vary across taxa, body size, and movement strategy?\nWhere are the most permeable, and the most fragmented, landscapes?\nWhat management interventions have measurable effects?"
+    "text": "Why now\nAnthropogenic infrastructure such as settlements, roads, fences, railways is expanding faster than our ability to measure its cumulative effect on wildlife movement. Single-study designs miss cross-system patterns. By harmonizing tracking data across species and biomes, we ask:\n\nHow does the configuration, in addition to the composition, of anthropogenic infrastructure shape animal movement?\nHow animals cross different types of transporation infrastructure differently?\nHow can we use actual animal movement data to inform functional connectivity?"
   },
   {
     "objectID": "index.html#team-contributors",
@@ -53,7 +53,7 @@
     "href": "protocol.html#overview",
     "title": "Data Cleaning Protocol",
     "section": "Overview",
-    "text": "Overview\nThis protocol covers all steps between receipt of raw GPS tracking data from collaborators and the start of manuscript analyses. Each level produces a versioned output dataset. All decisions are logged in the cleaning metadata spreadsheet.\nResponsibility note: Verification of data integrity — correct species, individual identity, deployment dates, tag behavior — is the responsibility of the data collector/owner. Flagged issues must be resolved with the data provider before proceeding."
+    "text": "Overview\nThis protocol covers preprocessing steps between receipt of raw GPS tracking data from collaborators and the start of analyses for different subprojects. Each level produces a versioned output dataset. All decisions are logged in the cleaning metadata spreadsheet.\nResponsibility note: Verification of data integrity — correct species, individual identity, deployment dates, tag behavior — is the responsibility of the data collector/owner. Flagged issues must be resolved with the data provider before proceeding."
   },
   {
     "objectID": "protocol.html#level-0-data-standardization",
