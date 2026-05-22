@@ -1,24 +1,22 @@
 # GPS Tracking Data Cleaning Protocol
 
 **Version:** 1.0 (draft for team review)  
-**Last updated:** 2026-04-29  
+**Last updated:** 2026-05-22  
 **Status:** ⚠️ Draft — please review and add comments before implementation
 
 ---
 
 ## Overview
 
-This protocol covers preprocessing steps between receipt of raw GPS tracking data from collaborators and the start of analyses for different subprojects. Each level produces a versioned output dataset. All decisions are logged in the cleaning metadata spreadsheet.
+This protocol covers preprocessing steps between receipt of raw GPS tracking data from collaborators and the start of analyses for different subprojects. Each level produces a versioned output dataset. 
 
-**Responsibility note:** Verification of data integrity — correct species, individual identity, deployment dates, tag behavior — is the responsibility of the data collector/owner. Flagged issues must be resolved with the data provider before proceeding.
+**Responsibility note:** Verification of data integrity — correct species, individual identity, deployment dates, tag behavior, time zone, original projection — is the responsibility of the data collector/owner. Flagged issues must be resolved with the data provider before proceeding.
 
 ---
 
 ## Level 0 — Data Standardization
 
-Each study is processed into a standardized flat file saved as `Study_name.csv` in the `Cleaned_data_L0/` folder. Completely duplicated datasets (same species, same study, redundant submissions from different collaborators) are not recorded in the cleaning metadata tab but are retained in the data provider contact sheet for reference.
-
-**Naming convention:** `Study.name` must be all lowercase, no spaces, underscores only (e.g., `mule_deer_utah`). For Movebank-sourced data, retain the original Movebank study ID/name. Confirm that names are unique and consistent across all tracking sheets before proceeding.
+Each study is manually processed into a standardized flat file saved as `Study_name.csv` in the `Cleaned_data_L0/` folder. Completely duplicated datasets (same species, same study, redundant submissions from different collaborators) are not recorded in the cleaning metadata tab but are retained in the data provider contact sheet for reference.
 
 ### Required columns
 
@@ -26,14 +24,14 @@ Retain all fields if provided. Contact the data owner if mandatory fields are ab
 
 | Field | Mandatory | Notes |
 |---|---|---|
-| `Study.name` | Yes | Binomial or species name + study ID/name/location. Assigned by data cleaner if not from Movebank. Must be unique and consistent across sheets. |
+| `Study.name` | Yes | Binomial or species common name + study ID/name/location. Assigned by data cleaner if not from Movebank. Must be unique and consistent across sheets. |
 | `Binomial` | Yes | Species-level identification. Contact data owner if missing. |
 | `trackID.original` | Yes | Original individual ID from the source dataset. Retained as-is; a new unique ID is assigned in Level 1. |
 | `TimestampUTC` | Yes | Verify time zone conversion to UTC. Format: `YYYY-MM-DD HH:MM:SS`. |
-| `Location.long` | Yes | Decimal degrees, EPSG:4326. |
-| `Location.lat` | Yes | Decimal degrees, EPSG:4326. |
+| `Location.long` | Yes | Decimal degrees, EPSG:4326. Reprojected from the original CRS if different.|
+| `Location.lat` | Yes | Decimal degrees, EPSG:4326. Reprojected from the original CRS if different.|
 | `movebank.id` | If applicable | For Movebank-sourced data only. |
-| `Bodymass.kg` | If provided | Confirm units are kg. |
+| `Bodymass.kg` | If provided | Confirm units are kg. Otherwise will derive from the PanTHERIA dataset to fulfill subproject needs.|
 | `Sex` | If provided | |
 | `Age` | If provided | Record as numerical age or life stage (e.g., adult, juvenile, calf). |
 | `DOP` | If provided | Note whether HDOP, PDOP, or number of satellites — retain original field name and document in metadata. |
@@ -41,11 +39,13 @@ Retain all fields if provided. Contact the data owner if mandatory fields are ab
 | `Temperature` | If provided | |
 | Additional attributes | If provided | Retain any other fields supplied by the data owner. |
 
+**Naming convention:** `Study.name` must be all lowercase, no spaces, underscores only (e.g., `mule_deer_utah`). For Movebank-sourced data, retain the original Movebank study ID/name. Confirm that names are unique and consistent across all tracking sheets before proceeding.
 **CRS note:** Standardize all coordinates to EPSG:4326 (WGS84) at this level, before any distance or speed calculations in subsequent steps. Speed is computed using `distHaversine()` (R package `geosphere`), which calculates great-circle distances in meters directly from decimal-degree coordinates — no intermediate reprojection is required.
+**Time zone note:** Converting time zone can lead to parsing failures due to different formatting issues. Always double check to make sure no NAs are manually introduced.
 
 ---
 
-## Level 1 — Rough Data Filtering and Deduplication
+## Level 1 — Rough Data Filtering and remove duplications
 
 Each study is filtered individually and saved as `Study_name_L1.csv`. The output file retains only the following six columns: `Study.name`, `Binomial`, `trackID.unique`, `TimestampUTC`, `Location.long`, `Location.lat`.
 
@@ -53,7 +53,7 @@ Each study is filtered individually and saved as `Study_name_L1.csv`. The output
 
 ### Step 1.0 — Standardize study names
 
-Convert all `Study.name` values to lowercase, replace spaces with underscores, remove special characters.
+Because `Study.name` is assigned by different data cleaners manually and can contain errors. Double check all names and convert all `Study.name` values to lowercase, replace spaces with underscores, remove special characters.
 
 ### Step 1.1 — Remove invalid locations and timestamps
 
@@ -71,7 +71,7 @@ Remove records with timestamps outside a biologically and logistically plausible
 
 Compute step-level instantaneous speed for each individual's track using `distHaversine()` (R package `geosphere`), which returns distances in meters from decimal-degree coordinates. Divide by the elapsed time in seconds to obtain speed in m/s.
 
-Flag positions where **both** incoming and outgoing speed exceed a study-level threshold — targeting both directions avoids removing valid fast-transit segments (Bjørneraas et al. 2010; Gupte et al. 2022, §5.2). The threshold should be based on the known or published maximum movement speed for the focal species. If no species-specific value is available, use the 99th percentile of the study's own speed distribution as a data-driven threshold, starting with a liberal (high) value to minimize over-filtering. Document the threshold used for each study in the cleaning metadata.
+Flag positions where **both** incoming and outgoing speed exceed a study-level threshold — targeting both directions avoids removing valid fast-transit segments (Bjørneraas et al. 2010; Gupte et al. 2022, §5.2). The threshold should be based on the known or published maximum movement speed for the focal species. If no species-specific value is available, we used `Q3 + 100 * IQR` of the study's own speed distribution as a data-driven threshold, starting with a liberal (high) value to minimize over-filtering. Document the threshold used for each study in the cleaning metadata.
 
 Remove flagged positions with caution — review before deleting.
 
@@ -128,7 +128,7 @@ Reviewers independently flag individuals with visible problems: positional outli
 
 - **DOP issue:** Return to the original database to retrieve DOP values if not included in the Level 0 file. Re-evaluate the flagged point with this information.
 - **Timestamp issue:** Return to the original database to verify the timestamp.
-- Document all ambiguous cases with screenshots and notes in the shared annotation document.
+- Document all ambiguous cases with screenshots and notes in the shared annotation document. Discuss in team meetings.
 
 ### Step 2.4 — Export and archive
 
@@ -136,7 +136,7 @@ Export cleaned GeoPackages as CSV files with `_L2` appended to the filename. Upl
 
 ### Step 2.5 — Column selection for L2 output
 
-Retain the core six columns from Level 1, plus any ancillary fields needed for downstream analyses (e.g., `DOP`, `Sex`, `Age` where available).
+Retain the core six columns from Level 1, join any ancillary fields needed for downstream analyses (e.g., `DOP`, `Sex`, `Age` where available).
 
 ---
 
@@ -148,7 +148,10 @@ Apply the following filter after Level 2 cleaning, as a final eligibility criter
 
 **Minimum tracking duration and displacement filter** (Tucker et al. 2018): Exclude individuals with fewer than **60 days** of tracking data or fewer than **50 displacements**. Document all exclusions in the cleaning metadata.
 
-### Subproject - [TO BE UPDATED]
+### Subproject - Road Crossing (Oosterhoff et al.)
+
+
+### Subproject - Functional Connectivity (Oosterhoff et al.)
 
 ---
 
