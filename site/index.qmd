@@ -4,11 +4,21 @@ subtitle: "Synthesizing animal tracking data to quantify effects of human infras
 date: today
 ---
 
-## What this project is
+## About the project
 
-We assemble a global GPS tracking dataset for terrestrial mammals to examine how
-linear infrastructure and other anthropogenic barriers reshape animal movement —
+Anthropogenic infrastructure such as settlements, roads, fences, railways is expanding faster
+than our ability to measure its cumulative effect on wildlife movement. Single-study
+designs miss cross-system patterns. 
+
+We assembled a global GPS tracking dataset for terrestrial mammals to examine how
+human infrastructure reshape animal movement —
 from fine-scale behavioral responses to landscape-level connectivity loss.
+
+By harmonizing tracking data across species and biomes, we ask:
+
+- How does the configuration, in addition to the composition, of anthropogenic infrastructure shape animal movement?
+- How animals cross different types of transporation infrastructure differently?
+- How can we use actual animal movement data to inform functional connectivity?
 
 The compiled archive currently spans **301 studies** across **69 species** and
 **60+ countries**, contributed by collaborators worldwide.
@@ -16,21 +26,10 @@ The compiled archive currently spans **301 studies** across **69 species** and
 [See the study sites map →](map.qmd){.btn .btn-outline-primary}
 [Read the data protocol →](protocol.qmd){.btn .btn-outline-secondary}
 
-## Why now
-
-Anthropogenic infrastructure such as settlements, roads, fences, railways is expanding faster
-than our ability to measure its cumulative effect on wildlife movement. Single-study
-designs miss cross-system patterns. By harmonizing tracking data across species and
-biomes, we ask:
-
-- How does the configuration, in addition to the composition, of anthropogenic infrastructure shape animal movement?
-- How animals cross different types of transporation infrastructure differently?
-- How can we use actual animal movement data to inform functional connectivity?
-
 ## Team & contributors
 
-To be added — please reach out if you'd like to contribute data or collaborate.
+To be added.
 
-## Funding
+## Outcome
 
 To be added.
