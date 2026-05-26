@@ -1,6 +1,6 @@
 ---
 title: "Study sites"
-subtitle: "Locations of all GPS tracking studies in the synthesis"
+subtitle: "Locations of all tracking studies"
 date: today
 format:
   html:

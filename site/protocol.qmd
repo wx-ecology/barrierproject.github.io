@@ -1,6 +1,6 @@
 ---
 title: "Data Cleaning Protocol"
-subtitle: "Levels 0–2: standardization, deduplication, and quality control"
+subtitle: "Levels 0–2: standardization, duplication removal, and quality control"
 date: today
 toc: true
 ---
