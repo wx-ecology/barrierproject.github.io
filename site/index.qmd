@@ -35,12 +35,12 @@ The compiled archive currently spans **301 studies** across **69 species** and
 
 Frankfurt, Germany
 
-- **Wenjing Xu**
+- **Wenjing Xu* **
 - **Nilanjan Chatterjee**
 - **Thomas Müller**
 
 ::: {.callout-note appearance="simple"}
-*Wenjing Xu's current affiliation: University of Massachusetts Amherst, USA.*
+*Current affiliation: University of Massachusetts Amherst, USA.*
 :::
 
 :::
