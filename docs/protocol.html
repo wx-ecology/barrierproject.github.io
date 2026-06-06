@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-05-26">
+<meta name="dcterms.date" content="2026-06-06">
 
 <title>Data Cleaning Protocol – Global Barrier Project</title>
 <style>
@@ -159,12 +159,11 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#subproject---settlement-configuration-xu-et-al." id="toc-subproject---settlement-configuration-xu-et-al." class="nav-link" data-scroll-target="#subproject---settlement-configuration-xu-et-al.">Subproject - Settlement Configuration (Xu et al.)</a></li>
   <li><a href="#subproject---road-crossing-oosterhoff-et-al." id="toc-subproject---road-crossing-oosterhoff-et-al." class="nav-link" data-scroll-target="#subproject---road-crossing-oosterhoff-et-al.">Subproject - Road Crossing (Oosterhoff et al.)</a></li>
-  <li><a href="#subproject---functional-connectivity-oosterhoff-et-al." id="toc-subproject---functional-connectivity-oosterhoff-et-al." class="nav-link" data-scroll-target="#subproject---functional-connectivity-oosterhoff-et-al.">Subproject - Functional Connectivity (Oosterhoff et al.)</a></li>
+  <li><a href="#subproject---functional-connectivity-chatterjee-et-al." id="toc-subproject---functional-connectivity-chatterjee-et-al." class="nav-link" data-scroll-target="#subproject---functional-connectivity-chatterjee-et-al.">Subproject - Functional Connectivity (Chatterjee et al.)</a></li>
   </ul></li>
   <li><a href="#cleaning-metadata-and-contact-sheet" id="toc-cleaning-metadata-and-contact-sheet" class="nav-link" data-scroll-target="#cleaning-metadata-and-contact-sheet">Cleaning Metadata and Contact Sheet</a>
   <ul class="collapse">
   <li><a href="#cleaning-metadata-tab" id="toc-cleaning-metadata-tab" class="nav-link" data-scroll-target="#cleaning-metadata-tab">Cleaning metadata tab</a></li>
-  <li><a href="#data-provider-contact-sheet" id="toc-data-provider-contact-sheet" class="nav-link" data-scroll-target="#data-provider-contact-sheet">Data provider contact sheet</a></li>
   </ul></li>
   <li><a href="#implementation-notes" id="toc-implementation-notes" class="nav-link" data-scroll-target="#implementation-notes">Implementation Notes</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
@@ -189,7 +188,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">May 26, 2026</p>
+      <p class="date">June 6, 2026</p>
     </div>
   </div>
   
@@ -228,7 +227,7 @@ Note
 </section>
 <section id="level-0-data-standardization" class="level2">
 <h2 class="anchored" data-anchor-id="level-0-data-standardization">Level 0 — Data Standardization</h2>
-<p>Each study is manually processed into a standardized flat file saved as <code>Study_name.csv</code> in the <code>Cleaned_data_L0/</code> folder. Completely duplicated datasets (same species, same study, redundant submissions from different collaborators) are not recorded in the cleaning metadata tab but are retained in the data provider contact sheet for reference.</p>
+<p>Each study is manually processed into a standardized flat file saved as <code>Study_name.csv</code> in the <code>Cleaned_data_L0/</code> folder.</p>
 <section id="required-columns" class="level3">
 <h3 class="anchored" data-anchor-id="required-columns">Required columns</h3>
 <p>Retain all fields if provided. Contact the data owner if mandatory fields are absent.</p>
@@ -284,7 +283,7 @@ Note
 <tr class="even">
 <td><code>Bodymass.kg</code></td>
 <td>If provided</td>
-<td>Confirm units are kg. Otherwise will derive from the PanTHERIA dataset to fulfill subproject needs.</td>
+<td>Confirm units are kg.</td>
 </tr>
 <tr class="odd">
 <td><code>Sex</code></td>
@@ -330,7 +329,7 @@ Note
 </blockquote>
 <section id="step-1.0-standardize-study-names" class="level3">
 <h3 class="anchored" data-anchor-id="step-1.0-standardize-study-names">Step 1.0 — Standardize study names</h3>
-<p>Because <code>Study.name</code> is assigned by different data cleaners manually and can contain errors. Double check all names and convert all <code>Study.name</code> values to lowercase, replace spaces with underscores, remove special characters.</p>
+<p>Because <code>Study.name</code> is assigned by different data cleaners manually and can contain typos. Double check all names and convert all <code>Study.name</code> values to lowercase, replace spaces with underscores, remove special characters.</p>
 </section>
 <section id="step-1.1-remove-invalid-locations-and-timestamps" class="level3">
 <h3 class="anchored" data-anchor-id="step-1.1-remove-invalid-locations-and-timestamps">Step 1.1 — Remove invalid locations and timestamps</h3>
@@ -348,16 +347,16 @@ Note
 <section id="step-1.3-flag-and-filter-unrealistic-movement-speeds" class="level3">
 <h3 class="anchored" data-anchor-id="step-1.3-flag-and-filter-unrealistic-movement-speeds">Step 1.3 — Flag and filter unrealistic movement speeds</h3>
 <p>Compute step-level instantaneous speed for each individual’s track using <code>distHaversine()</code> (R package <code>geosphere</code>), which returns distances in meters from decimal-degree coordinates. Divide by the elapsed time in seconds to obtain speed in m/s.</p>
-<p>Flag positions where <strong>both</strong> incoming and outgoing speed exceed a study-level threshold — targeting both directions avoids removing valid fast-transit segments (Bjørneraas et al.&nbsp;2010; Gupte et al.&nbsp;2022, §5.2). The threshold should be based on the known or published maximum movement speed for the focal species. If no species-specific value is available, we used <code>Q3 + 100 * IQR</code> of the study’s own speed distribution as a data-driven threshold, starting with a liberal (high) value to minimize over-filtering. Document the threshold used for each study in the cleaning metadata.</p>
-<p>Remove flagged positions with caution — review before deleting.</p>
+<p>Flag positions where <strong>both</strong> incoming and outgoing speed exceed a study-level threshold — targeting both directions avoids removing valid fast-transit segments (Bjørneraas et al.&nbsp;2010; Gupte et al.&nbsp;2022, §5.2). We used <code>Q3 + 100 * IQR</code> of the study’s own speed distribution as a data-driven threshold, starting with a liberal (high) value to minimize over-filtering. Document the threshold used for each study in the cleaning metadata.</p>
+<p>Remove flagged positions with caution.</p>
 </section>
 <section id="step-1.4-assign-unique-individual-ids" class="level3">
 <h3 class="anchored" data-anchor-id="step-1.4-assign-unique-individual-ids">Step 1.4 — Assign unique individual IDs</h3>
-<p>Create <code>trackID.unique</code> as a globally unique identifier within each species across all studies (e.g., <code>Binomial_StudyName_originalID</code>). The original ID is retained in <code>trackID.original</code> at Level 0.</p>
+<p>Create <code>trackID.unique</code> as a globally unique identifier within each species across all studies. In this project, we used <code>Binomial_number</code> in which the number is a generated consecutive number across all individuals of a species.</p>
 </section>
 <section id="step-1.5-resolve-duplicate-datasets" class="level3">
 <h3 class="anchored" data-anchor-id="step-1.5-resolve-duplicate-datasets">Step 1.5 — Resolve duplicate datasets</h3>
-<p>Identify cases where the same species in the same country appears in more than one submitted dataset (potential overlapping submissions). When confirmed duplicates exist, retain the dataset with the longer temporal coverage. Document the decision in the cleaning metadata and consult the data provider contact sheet before removing any dataset.</p>
+<p>Identify potentially duplicate tracks by identifying cases where the same species in the same country appears in more than one submitted datasets. Look at the tracks to confirm duplicate tracks, and retain the dataset with longer temporal coverage. Document the decision in the cleaning metadata.</p>
 </section>
 <section id="step-1.6-save-level-1-output" class="level3">
 <h3 class="anchored" data-anchor-id="step-1.6-save-level-1-output">Step 1.6 — Save Level 1 output</h3>
@@ -373,7 +372,6 @@ Note
 <li>Fix rate</li>
 <li>Total records before and after each filter step</li>
 <li>Filter thresholds applied</li>
-<li>Any issues flagged</li>
 </ul>
 <hr>
 </section>
@@ -386,7 +384,7 @@ Note
 </blockquote>
 <section id="step-2.1-plot-individual-tracks" class="level3">
 <h3 class="anchored" data-anchor-id="step-2.1-plot-individual-tracks">Step 2.1 — Plot individual tracks</h3>
-<p>For each individual, generate a map of the movement track. The plot title must include: <code>Binomial</code>, <code>trackID.unique</code>, and the median fix interval. Retain all plots for documentation.</p>
+<p>For each individual, generate a map of the movement track. The plot title include: <code>Binomial</code>, <code>trackID.unique</code>, the median fix interval, and temporal span. Retain all plots for documentation.</p>
 </section>
 <section id="step-2.2-flag-individuals-with-issues" class="level3">
 <h3 class="anchored" data-anchor-id="step-2.2-flag-individuals-with-issues">Step 2.2 — Flag individuals with issues</h3>
@@ -399,7 +397,7 @@ Note
 <ol type="1">
 <li>Export the individual track as a GeoPackage (<code>.gpkg</code>) to the designated GeoPackage folder.</li>
 <li>In QGIS, delete obvious outliers manually.</li>
-<li>Check all speed-flagged positions from Level 1 — delete with caution; retain points where the correct decision is ambiguous and note in cleaning metadata.</li>
+<li>Create a more strict speed flag (<code>Q3 + 25 * IQR</code>) for visual check. Delete flagged points with caution. Retain points where the correct decision is ambiguous and note in cleaning metadata.</li>
 <li><strong>Water point issue:</strong> Overlay points against permanent water body layers to determine whether a point is genuinely in permanent water. If the classification is uncertain, retain the point and note it in the cleaning metadata.</li>
 </ol>
 </section>
@@ -418,7 +416,7 @@ Note
 </section>
 <section id="step-2.5-column-selection-for-l2-output" class="level3">
 <h3 class="anchored" data-anchor-id="step-2.5-column-selection-for-l2-output">Step 2.5 — Column selection for L2 output</h3>
-<p>Retain the core six columns from Level 1, join any ancillary fields needed for downstream analyses (e.g., <code>DOP</code>, <code>Sex</code>, <code>Age</code> where available).</p>
+<p>Retain the core six columns from Level 1.</p>
 <hr>
 </section>
 </section>
@@ -431,9 +429,17 @@ Note
 </section>
 <section id="subproject---road-crossing-oosterhoff-et-al." class="level3">
 <h3 class="anchored" data-anchor-id="subproject---road-crossing-oosterhoff-et-al.">Subproject - Road Crossing (Oosterhoff et al.)</h3>
+<ul>
+<li>Only retain studies with a resolution of at least one fix per 2 hours.</li>
+<li>Filter out the hibernation period of brown or black bears</li>
+<li>Remove the first three days of data</li>
+<li>Resample all tracks to a 2-hour resolution</li>
+<li>Only retain tracks with more than 30 displacements</li>
+</ul>
 </section>
-<section id="subproject---functional-connectivity-oosterhoff-et-al." class="level3">
-<h3 class="anchored" data-anchor-id="subproject---functional-connectivity-oosterhoff-et-al.">Subproject - Functional Connectivity (Oosterhoff et al.)</h3>
+<section id="subproject---functional-connectivity-chatterjee-et-al." class="level3">
+<h3 class="anchored" data-anchor-id="subproject---functional-connectivity-chatterjee-et-al.">Subproject - Functional Connectivity (Chatterjee et al.)</h3>
+<p>(upcoming)</p>
 <hr>
 </section>
 </section>
@@ -450,10 +456,6 @@ Note
 <li>Records before and after each filter</li>
 <li>Flagged issues and resolutions</li>
 </ul>
-</section>
-<section id="data-provider-contact-sheet" class="level3">
-<h3 class="anchored" data-anchor-id="data-provider-contact-sheet">Data provider contact sheet</h3>
-<p>Retains: study name, final number of individuals included, approximate study centroid (lat/lon), contact name and email. Updated when datasets are excluded or issues require provider consultation. Completely duplicated datasets are logged here even if not in the cleaning metadata tab.</p>
 <hr>
 </section>
 </section>
@@ -890,7 +892,7 @@ Note
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p>© Global Barrier Project · Last updated May 26, 2026</p>
+<p>© Global Barrier Project · Last updated June 6, 2026</p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

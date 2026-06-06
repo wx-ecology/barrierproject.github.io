@@ -16,7 +16,7 @@ This protocol covers preprocessing steps between receipt of raw GPS tracking dat
 
 ## Level 0 — Data Standardization
 
-Each study is manually processed into a standardized flat file saved as `Study_name.csv` in the `Cleaned_data_L0/` folder. Completely duplicated datasets (same species, same study, redundant submissions from different collaborators) are not recorded in the cleaning metadata tab but are retained in the data provider contact sheet for reference.
+Each study is manually processed into a standardized flat file saved as `Study_name.csv` in the `Cleaned_data_L0/` folder. 
 
 ### Required columns
 
@@ -31,7 +31,7 @@ Retain all fields if provided. Contact the data owner if mandatory fields are ab
 | `Location.long` | Yes | Decimal degrees, EPSG:4326. Reprojected from the original CRS if different.|
 | `Location.lat` | Yes | Decimal degrees, EPSG:4326. Reprojected from the original CRS if different.|
 | `movebank.id` | If applicable | For Movebank-sourced data only. |
-| `Bodymass.kg` | If provided | Confirm units are kg. Otherwise will derive from the PanTHERIA dataset to fulfill subproject needs.|
+| `Bodymass.kg` | If provided | Confirm units are kg.|
 | `Sex` | If provided | |
 | `Age` | If provided | Record as numerical age or life stage (e.g., adult, juvenile, calf). |
 | `DOP` | If provided | Note whether HDOP, PDOP, or number of satellites — retain original field name and document in metadata. |
@@ -53,7 +53,7 @@ Each study is filtered individually and saved as `Study_name_L1.csv`. The output
 
 ### Step 1.0 — Standardize study names
 
-Because `Study.name` is assigned by different data cleaners manually and can contain errors. Double check all names and convert all `Study.name` values to lowercase, replace spaces with underscores, remove special characters.
+Because `Study.name` is assigned by different data cleaners manually and can contain typos. Double check all names and convert all `Study.name` values to lowercase, replace spaces with underscores, remove special characters.
 
 ### Step 1.1 — Remove invalid locations and timestamps
 
@@ -71,17 +71,17 @@ Remove records with timestamps outside a biologically and logistically plausible
 
 Compute step-level instantaneous speed for each individual's track using `distHaversine()` (R package `geosphere`), which returns distances in meters from decimal-degree coordinates. Divide by the elapsed time in seconds to obtain speed in m/s.
 
-Flag positions where **both** incoming and outgoing speed exceed a study-level threshold — targeting both directions avoids removing valid fast-transit segments (Bjørneraas et al. 2010; Gupte et al. 2022, §5.2). The threshold should be based on the known or published maximum movement speed for the focal species. If no species-specific value is available, we used `Q3 + 100 * IQR` of the study's own speed distribution as a data-driven threshold, starting with a liberal (high) value to minimize over-filtering. Document the threshold used for each study in the cleaning metadata.
+Flag positions where **both** incoming and outgoing speed exceed a study-level threshold — targeting both directions avoids removing valid fast-transit segments (Bjørneraas et al. 2010; Gupte et al. 2022, §5.2). We used `Q3 + 100 * IQR` of the study's own speed distribution as a data-driven threshold, starting with a liberal (high) value to minimize over-filtering. Document the threshold used for each study in the cleaning metadata.
 
-Remove flagged positions with caution — review before deleting.
+Remove flagged positions with caution.
 
 ### Step 1.4 — Assign unique individual IDs
 
-Create `trackID.unique` as a globally unique identifier within each species across all studies (e.g., `Binomial_StudyName_originalID`). The original ID is retained in `trackID.original` at Level 0.
+Create `trackID.unique` as a globally unique identifier within each species across all studies. In this project, we used `Binomial_number` in which the number is a generated consecutive number across all individuals of a species.
 
 ### Step 1.5 — Resolve duplicate datasets
 
-Identify cases where the same species in the same country appears in more than one submitted dataset (potential overlapping submissions). When confirmed duplicates exist, retain the dataset with the longer temporal coverage. Document the decision in the cleaning metadata and consult the data provider contact sheet before removing any dataset.
+Identify potentially duplicate tracks by identifying cases where the same species in the same country appears in more than one submitted datasets. Look at the tracks to confirm duplicate tracks, and retain the dataset with longer temporal coverage. Document the decision in the cleaning metadata. 
 
 ### Step 1.6 — Save Level 1 output
 
@@ -97,7 +97,6 @@ Record results in the **"Level 1 Study Metadata"** tab:
 - Fix rate
 - Total records before and after each filter step
 - Filter thresholds applied
-- Any issues flagged
 
 ---
 
@@ -109,7 +108,7 @@ This level applies human-in-the-loop visual inspection to catch errors that auto
 
 ### Step 2.1 — Plot individual tracks
 
-For each individual, generate a map of the movement track. The plot title must include: `Binomial`, `trackID.unique`, and the median fix interval. Retain all plots for documentation.
+For each individual, generate a map of the movement track. The plot title include: `Binomial`, `trackID.unique`, the median fix interval, and temporal span. Retain all plots for documentation.
 
 ### Step 2.2 — Flag individuals with issues
 
@@ -121,7 +120,7 @@ Reviewers independently flag individuals with visible problems: positional outli
 
 1. Export the individual track as a GeoPackage (`.gpkg`) to the designated GeoPackage folder.
 2. In QGIS, delete obvious outliers manually.
-3. Check all speed-flagged positions from Level 1 — delete with caution; retain points where the correct decision is ambiguous and note in cleaning metadata.
+3. Create a more strict speed flag (`Q3 + 25 * IQR`) for visual check. Delete flagged points with caution. Retain points where the correct decision is ambiguous and note in cleaning metadata.
 4. **Water point issue:** Overlay points against permanent water body layers to determine whether a point is genuinely in permanent water. If the classification is uncertain, retain the point and note it in the cleaning metadata.
 
 #### Ambiguous cases (reviewers disagree, or additional data needed)
@@ -136,7 +135,7 @@ Export cleaned GeoPackages as CSV files with `_L2` appended to the filename. Upl
 
 ### Step 2.5 — Column selection for L2 output
 
-Retain the core six columns from Level 1, join any ancillary fields needed for downstream analyses (e.g., `DOP`, `Sex`, `Age` where available).
+Retain the core six columns from Level 1.
 
 ---
 
@@ -150,8 +149,15 @@ Apply the following filter after Level 2 cleaning, as a final eligibility criter
 
 ### Subproject - Road Crossing (Oosterhoff et al.)
 
+- Only retain studies with a resolution of at least one fix per 2 hours.
+- Filter out the hibernation period of brown or black bears
+- Remove the first three days of data
+- Resample all tracks to a 2-hour resolution
+- Only retain tracks with more than 30 displacements
 
-### Subproject - Functional Connectivity (Oosterhoff et al.)
+### Subproject - Functional Connectivity (Chatterjee et al.)
+
+(upcoming)
 
 ---
 
@@ -167,10 +173,6 @@ Updated at each level. Records for each study:
 - Filter thresholds applied
 - Records before and after each filter
 - Flagged issues and resolutions
-
-### Data provider contact sheet
-
-Retains: study name, final number of individuals included, approximate study centroid (lat/lon), contact name and email. Updated when datasets are excluded or issues require provider consultation. Completely duplicated datasets are logged here even if not in the cleaning metadata tab.
 
 ---
 

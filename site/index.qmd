@@ -11,13 +11,13 @@ than our ability to measure its cumulative effect on wildlife movement. Single-s
 designs miss cross-system patterns. 
 
 We assembled a global GPS tracking dataset for terrestrial mammals to examine how
-human infrastructure reshape animal movement —
+human infrastructure reshapes animal movement —
 from fine-scale behavioral responses to landscape-level connectivity loss.
 
 By harmonizing tracking data across species and biomes, we ask:
 
-- How does the configuration, in addition to the composition, of anthropogenic infrastructure shape animal movement?
-- How animals cross different types of transporation infrastructure differently?
+- How does the configuration, in addition to the composition, of anthropogenic infrastructure shape terrestrial mammalian movement?
+- How do mammals cross different types of transportation infrastructure differently?
 - How can we use actual animal movement data to inform functional connectivity?
 
 The compiled archive currently spans **301 studies** across **69 species** and
@@ -26,10 +26,35 @@ The compiled archive currently spans **301 studies** across **69 species** and
 [See the study sites map →](map.qmd){.btn .btn-outline-primary}
 [Read the data protocol →](protocol.qmd){.btn .btn-outline-secondary}
 
-## Team & contributors
+## Core team
 
-To be added.
+::: {.grid}
 
-## Outcome
+::: {.g-col-12 .g-col-md-6}
+### Senckenberg Biodiversity and Climate Research Centre
 
-To be added.
+Frankfurt, Germany
+
+- **Wenjing Xu**
+- **Nilanjan Chatterjee**
+- **Thomas Müller**
+
+::: {.callout-note appearance="simple"}
+*Wenjing Xu's current affiliation: University of Massachusetts Amherst, USA.*
+:::
+
+:::
+
+::: {.g-col-12 .g-col-md-6}
+### Radboud University
+
+Nijmegen, The Netherlands
+
+- **Hanna Wiggen-Oosterhoff**
+- **Aafke Schipper**
+- **Mark Huijbregts**
+- **Jelle Hilbers**
+- **Marlee A. Tucker**
+:::
+
+:::
