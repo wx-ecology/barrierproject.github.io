@@ -35,7 +35,8 @@ The compiled archive currently spans **301 studies** across **69 species** and
 
 Frankfurt, Germany
 
-- **Wenjing Xu* ** (Current affiliation: UMASS Amherst, USA)
+- **Wenjing Xu** <br> 
+  Current affiliation: UMASS Amherst, USA
 - **Nilanjan Chatterjee**
 - **Thomas Müller**
 
