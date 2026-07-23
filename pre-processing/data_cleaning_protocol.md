@@ -157,7 +157,9 @@ Apply the following filter after Level 2 cleaning, as a final eligibility criter
 
 ### Subproject - Functional Connectivity (Chatterjee et al.)
 
-(upcoming)
+- Resample all tracks to a **6-hour resolution** with 1-hour buffer
+- Only retain individual tracks with **more than 10 points** in a 30-day segment window
+- Filter out the **hibernation period** of brown or black bears (Lower than 25th quantile movement)
 
 ---
 
