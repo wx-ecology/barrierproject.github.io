@@ -1,5 +1,5 @@
 ---
-title: "Global Barrier Project"
+title: "Global Animal Movement Barrier Collaboration"
 subtitle: "Synthesizing animal tracking data to quantify effects of human infrastructure on terrestrial mammal movement"
 date: today
 ---
@@ -10,7 +10,7 @@ Anthropogenic infrastructure such as settlements, roads, fences, railways is exp
 than our ability to measure its cumulative effect on wildlife movement. Single-study
 designs miss cross-system patterns. 
 
-We assembled a global GPS tracking dataset for terrestrial mammals to examine how
+The Global Animal Movement Barrier Collaboration assembled a global GPS tracking dataset for terrestrial mammals to examine how
 human infrastructure reshapes animal movement —
 from fine-scale behavioral responses to landscape-level connectivity loss.
 

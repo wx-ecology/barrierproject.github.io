@@ -5,7 +5,7 @@ project:
     - "data/**"      # ensure the GeoJSON gets copied into the rendered site
 
 website:
-  title: "Global Barrier Project"
+  title: "Global Animal Movement Barrier Collaboration"
   description: "GPS tracking data synthesis on barrier effects on terrestrial mammal movement."
   site-url: "https://wx-ecology.github.io/barrierproject.github.io/"
   repo-url: "https://github.com/wx-ecology/barrierproject.github.io"
@@ -21,7 +21,7 @@ website:
       - icon: github
         href: https://github.com/wx-ecology/barrierproject.github.io
   page-footer:
-    center: "© Global Barrier Project · Last updated {{< meta date >}}"
+    center: "© Global Animal Movement Barrier Collaboration · Last updated {{< meta date >}}"
 
 format:
   html:

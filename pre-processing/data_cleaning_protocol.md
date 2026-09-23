@@ -1,8 +1,7 @@
 # GPS Tracking Data Cleaning Protocol
 
-**Version:** 1.0 (draft for team review)  
+**Version:** 1.0  
 **Last updated:** 2026-05-22  
-**Status:** ⚠️ Draft — please review and add comments before implementation
 
 ---
 
